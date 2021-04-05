@@ -61,7 +61,7 @@ function addToBasket(){
         }
     }
     
-    refreshTotalPrice(Math.round(lowestPrice))
+    refreshTotalPrice(Math.round(lowestPrice * 100) / 100)
 }
 
 function memberPrice(person){

@@ -46,7 +46,7 @@ function addToBasket(){
     
     var lowestPrice = getLowestPrice(basket)
     
-    refreshTotalPrice(Math.round(lowestPrice * 100) / 100)
+    refreshTotalPrice(lowestPrice)
 
     document.getElementById('firstName').value = ""
     document.getElementById('lastName').value = ""
@@ -75,7 +75,7 @@ function getLowestPrice(basket) {
         }
     }
 
-    return lowestPrice
+    return Math.round(lowestPrice * 100) / 100
 }
 
 function memberPrice(person){
@@ -104,12 +104,16 @@ function regularPrice(basket){
 
 function groupPrice(basket){
     total = 0
+    loyaltyCards = 0
 
     for(let member of basket){
         total += memberPrice(member)
+        if(member.isLoyality) {
+            loyaltyCards++;
+        }
     }
 
-    if(basket.length>=15){
+    if(basket.length>=15 && loyaltyCards >= 1){
         total*=0.92
         console.log("group price:" + total)
     }
@@ -119,6 +123,7 @@ function groupPrice(basket){
 
 function familyPrice(basket){
     total = 0
+    studentIDs = 0
     numberOfAdults = 0
     numberOfChildren = 0
 
@@ -126,12 +131,15 @@ function familyPrice(basket){
         if(member.age>=18){
             numberOfAdults++
         }else{
+            if(member.isStudent) {
+                studentIDs++;
+            }
             numberOfChildren++
         }
         total += memberPrice(member)
     }
 
-    if(numberOfAdults==2 && numberOfChildren>=3){
+    if(numberOfAdults==2 && numberOfChildren>=3 && studentIDs == numberOfChildren){
         total*=0.91
         console.log("family price:" + total)
     }

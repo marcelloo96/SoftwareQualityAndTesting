@@ -1,0 +1,85 @@
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/png" href="./jasmine/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="./jasmine/jasmine.css">
+
+    <script type="text/javascript" src="./jasmine/jasmine.js"></script>
+    <script type="text/javascript" src="./jasmine/jasmine-html.js"></script>
+    <script type="text/javascript" src="./jasmine/boot.js"></script>
+    <script type="text/javascript" src="./magic.js"></script>
+
+    <script>
+        // var member = new Person(firstName, lastName, age, student, loyality, senior)
+
+        describe('1. a. Given a person under the age of 2 with no discounts', () => {
+            it('The entrance fee should be 0 EUR.', () => {
+                var ageTwo = new Person("James", "Johnson", 2, false, false, false);
+                var ageOne = new Person("Jeremy", "Johnson", 1, false, false, false);
+                expect(memberPrice(ageTwo)).toBe(0);
+                expect(memberPrice(ageOne)).toBe(0);
+            })
+        });
+
+        describe('1. b. Given a person between the age of 3 and 14 with no discounts', () => {
+            it('The entrance fee should be 2.5 EUR.', () => {
+                var ageThree = new Person("James", "Johnson", 3, false, false, false);
+                var teenager = new Person("Jeremy", "Johnson", 14, false, false, false);
+                var child = new Person("Jonah", "Johnson", 8, false, false, false);
+
+                expect(memberPrice(ageThree)).toBe(2.5);
+                expect(memberPrice(teenager)).toBe(2.5);
+                expect(memberPrice(child)).toBe(2.5);
+            })
+        });
+
+        describe('1. c. Given a person above 14 years old with no discounts', () => {
+            it('The entrance fee should be 5.5 EUR.', () => {
+                var child = new Person("James", "Johnson", 14, false, false, false);
+                expect(memberPrice(child)).toBeLessThan(5.5);
+
+                var adult = new Person("Jenny", "Johnson", 15, false, false, false);
+                expect(memberPrice(adult)).toBe(5.5);
+
+                var adult2 = new Person("Jonathan", "Johnson", 25, false, false, false);
+                expect(memberPrice(adult2)).toBe(5.5);
+            })
+        });
+
+        describe('2. a. Given a person with student ID and no other cards', () => {
+            it('The entrance fee should be 6% off its regular price.', () => {
+                var student = new Person("James", "Johnson", 18, true, false, false);
+                var childStudent = new Person("James", "Johnson", 14, true, false, false);
+                var child = new Person("James", "Johnson", 14, false, false, false);
+                expect(studentPricePerPerson(student)).toBe(5.5 * 0.94);
+                expect(studentPricePerPerson(childStudent)).toBe(2.5 * 0.94);
+                expect(studentPricePerPerson(child)).toBe(2.5);
+            })
+        });
+
+        describe('2. b. Given a person with loyalty card and no other cards', () => {
+            it('The entrance fee should be 5% off its regular price.', () => {
+                var loyal = new Person("James", "Johnson", 18, false, true, false);
+                var notLoyal = new Person("James", "Johnson", 18, false, false, false);
+                var loyalChild = new Person("James", "Johnson", 14, false, true, false);
+
+                expect(loyaltyPricePerPerson(loyal)).toBe(5.5 * 0.95);
+                expect(loyaltyPricePerPerson(notLoyal)).toBe(5.5);
+                expect(loyaltyPricePerPerson(loyalChild)).toBe(2.5 * 0.95);
+            })
+        });
+
+        describe('2. b. Given a person with senior ID and no other cards', () => {
+            it('The entrance fee should be 6% off its regular price.', () => {
+                var senior = new Person("James", "Johnson", 65, false, false, true);
+                var notSenior = new Person("James", "Johnson", 55, false, false, false);
+                
+                expect(seniorPricePerPerson(senior)).toBe(5.5 * 0.94);
+                expect(seniorPricePerPerson(notSenior)).toBe(5.5);
+            })
+        });
+ 
+    </script>
+</head>
+
+</html>

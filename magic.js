@@ -44,22 +44,7 @@ function addToBasket(){
     console.log(member.toString())
     basket.push(member)
     
-    var discountedPrices = [
-        regularPrice(basket),
-        groupPrice(basket),
-        familyPrice(basket),
-        studentPrice(),
-        loyalityPrice(),
-        seniorPrice()
-    ]
-
-    var lowestPrice = Number.MAX_SAFE_INTEGER
-
-    for(let price of discountedPrices){
-        if(price<lowestPrice){
-            lowestPrice=price
-        }
-    }
+    var lowestPrice = getLowestPrice(basket)
     
     refreshTotalPrice(Math.round(lowestPrice * 100) / 100)
 
@@ -69,6 +54,28 @@ function addToBasket(){
     document.getElementById('student').checked = false
     document.getElementById('loyality').checked = false
     document.getElementById('senior').checked = false 
+}
+
+
+function getLowestPrice(basket) {
+    var discountedPrices = [
+        regularPrice(basket),
+        groupPrice(basket),
+        familyPrice(basket),
+        studentPrice(basket),
+        loyalityPrice(basket),
+        seniorPrice(basket)
+    ]
+
+    var lowestPrice = Number.MAX_SAFE_INTEGER
+
+    for(let price of discountedPrices){
+        if(price<lowestPrice){
+            lowestPrice=price
+        }
+    }
+
+    return lowestPrice
 }
 
 function memberPrice(person){
@@ -132,7 +139,7 @@ function familyPrice(basket){
     return total    
 }
 
-function studentPrice(){
+function studentPrice(basket){
     total = 0
 
     for(let member of basket){
@@ -147,7 +154,7 @@ function studentPricePerPerson(member){
 }
 
 
-function loyalityPrice(){
+function loyalityPrice(basket){
     total = 0
 
     for(let member of basket){
@@ -161,7 +168,7 @@ function loyaltyPricePerPerson(member){
     return member.isLoyality ? memberPrice(member)*0.95 : memberPrice(member)
 }
 
-function seniorPrice(){
+function seniorPrice(basket){
     total = 0
 
     for(let member of basket){

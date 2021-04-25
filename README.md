@@ -1,3 +1,4 @@
+## Specification
 An exhibiton has the following entrance fees:
 
 - R1 Children under 3 years: free entry
@@ -14,3 +15,11 @@ The following discounts applicable per person:
 The discounts can't be merged
 
 Every customer is entitled to the maximal discount attainable1.
+
+## Testing
+The codebase was tested using Jasmine, a behavior-driven development framework that can be used in a standalone manner. We considered Jasmine a lightweight, straightforward and easy to use JS testing framework.
+
+
+The Jasmine related files included in this repo are  from [this source](https://github.com/PizzaPokerGuy/jasmine-quickstart).
+
+To run the test cases and see their results, open the test.html.
